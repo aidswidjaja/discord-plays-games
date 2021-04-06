@@ -49,7 +49,7 @@ You need to inject a script like this:
 Keep the browser focused while the bot runs.
 */
 
-function log(msg) {
+function log(msg) { /* time will be logged in UTC because Windows Server 2019 for Datacenters on GCP is dumb and can't change timezones */
     const d = new Date();
     const t = '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' +
         d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ') ';
@@ -89,64 +89,42 @@ const pressButton = co.wrap(function*(button, repeat, delay) {
 });
 
 let canPressButton = true;
-const saveScreenshot = co.wrap(function*() {
-    try {
-        fs.unlinkSync(config.screenshotPath);
-    } catch (e) {}
 
+const saveScreenshot = co.wrap(function*() {
     log('taking screenshot');
-    robot.keyToggle(config.screenshotKey, 'down');
-    yield sleep(100);
-    robot.keyToggle(config.screenshotKey, 'up');
-    yield sleep(100);
+	
+	robot.keyToggle("control", 'down');
+	robot.keyToggle("shift", 'down');
+	robot.keyToggle("s", 'down');
+	robot.keyToggle("control", 'up');
+	robot.keyToggle("shift", 'up');
+	robot.keyToggle("s", 'up');
+
+
+	log('screenie key: ' + config.screenshotKey);
 
     log('waiting for screenshot to save');
-    if (!fs.existsSync(config.screenshotPath)) {
-        yield sleep(200);
+	
+    if (fs.existsSync(config.screenshotPath) == false) {
+		log('WARNING: did not detect screenshotPath (path == false)');
     }
-    log('detected screenshot save');
-});
-
-const pause = co.wrap(function*() {
-    robot.keyToggle(config.gamePauseKey, 'down');
-    yield sleep(100);
-    robot.keyToggle(config.gamePauseKey, 'up');
-    yield sleep(100);
-});
-
-const unpause = co.wrap(function*() {
-    robot.keyToggle(game.gameResumeKey, 'down');
-    yield sleep(100);
-    robot.keyToggle(game.gameResumeKey, 'up');
-    yield sleep(100);
+	
 });
 
 const processMessage = co.wrap(function*(msg) {
-    log('got outside message: ' + JSON.stringify(msg));
+    log('got outside message (JSON stringify): ' + JSON.stringify(msg));
     if (!canPressButton) {
         return;
     }
     canPressButton = false;
 
-    if (msg.cmd === 'UPDATE') {
-        yield unpause();
-        yield sleep(config.commandCooldown);
-        yield pause();
-        yield saveScreenshot();
-        process.send('update');
-    } else {
-        yield unpause();
-        const delay = yield pressButton(msg.cmd, msg.repeat);
-        const extraDelay = Math.max(config.commandCooldown - delay, 1000);
+	yield pressButton(msg.cmd, msg.repeat);
 
-        log('cooldown: waiting ' + extraDelay + 'ms');
-        yield sleep(extraDelay);
-        yield pause();
-
-        yield saveScreenshot();
-        process.send('update');
-    }
+	yield saveScreenshot();
+	process.send('update');
+	
     canPressButton = true;
+	
 });
 
 process.on('message', processMessage);
