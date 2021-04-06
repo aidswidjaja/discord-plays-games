@@ -2,7 +2,7 @@
 
 This is a modified version of the original version by [kylepaulsen](https://github.com/kylepaulsen/discord-plays-games) that fixes a number of compatibility issues and simplifies the project overall. Things I've changed:
 
-- some functionality has been removed, namely pause/unpause
+- some functionality has been removed, namely pause/unpause.
 - sleep() functions have been reduced to improve speediness. This should not impact performance or reliability.
 - more inline code comments and logging has been added for easier debugging.
 - some logic has been reworked (with bad adrian code) such that the bot should now work on the reference implementation below. The bot in vanilla stage encountered some problems running.
