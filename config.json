@@ -1,0 +1,22 @@
+{
+    "commandCooldown": 100,
+    "botChannel": "827426650253033484",
+    "screenshotPath": "greenshot.png",
+    "discordToken": "your-bot-token-here",
+    "chatToKeyboardKey": {
+        "up": "up",
+        "down": "down",
+        "left": "left",
+        "right": "right",
+        "a": "a",
+        "b": "b",
+        "select": "control",
+        "start": "enter",
+		"l": "l",
+		"r": "r",
+		"x": "x",
+		"y": "y"
+    },
+    "maxButtonPressesPerTurn": 9,
+    "discordBotMessage": "" 
+}
