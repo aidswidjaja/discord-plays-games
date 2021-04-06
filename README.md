@@ -13,7 +13,7 @@ This is a modified version of the original version by [kylepaulsen](https://gith
 
 - OS: Microsoft Windows Server 2019 Datacenter with Desktop Experience version 1809 (GCP public image) accessed through RDP
 - VM: e2-custom (4 vCPUs, 8 GB memory) on Google Cloud Platform Compute Engine in region australia-southeast-1b
-- Terminal emulator: Microsoft PowerShell
+- Terminal emulator: Windows PowerShell 5.1.17763.1490
 - DS emulator: NO$GBA gaming edition
 
 Note: the Ctrl-Shift-S screenshot key is hardcoded into keyboardRobot.js and triggers a window screenshot in [Greenshot](https://getgreenshot.org/). On a standard Windows 10 installation this will trigger the Snip & Sketch tool which you may need to adjust in order to suit your needs.
