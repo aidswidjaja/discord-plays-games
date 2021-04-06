@@ -6,7 +6,7 @@ let bot;
 let botChannel;
 let lastButtonPress = 0;
 
-function log(msg) {
+function log(msg) { /* time will be logged in UTC because Windows Server 2019 for Datacenters on GCP is dumb and can't change timezones */
     const d = new Date();
     const t = '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' +
         d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ') ';
@@ -56,7 +56,7 @@ function updateScreen() {
     log('uploading image!');
     const cmdCooldown = config.commandCooldown / 1000;
     bot.uploadFile({
-        to: botChannel,
+        to: config.botChannel, /* channel ID must be a string */
         file: config.screenshotPath,
         message: config.discordBotMessage
     }, function(err) {
@@ -95,6 +95,7 @@ function startDiscordBot() {
         update: updateScreen,
         clean: cleanABunch
     };
+	
     bot.on('message', function(user, userID, channelID, message, event) {
         const upMessage = (message || '').toLowerCase();
         const messageParts = upMessage.split('*').map(function(part) {
@@ -103,43 +104,49 @@ function startDiscordBot() {
         const cmd = messageParts[0];
         let repeat = 1;
         if (messageParts[1]) {
-            repeat = parseInt(messageParts[1]);
-            if (isNaN(repeat)) {
+            repeat = parseInt(messageParts[1]); /* parse string to int */
+            if (isNaN(repeat)) { /* check for valid number */
                 repeat = 1;
             }
             repeat = Math.max(Math.min(repeat, config.maxButtonPressesPerTurn), 1);
         }
+		
+		log('message received : ' + message);
 
-        const isValidKey = !!config.chatToKeyboardKey[cmd];
+        const isValidKey = !!config.chatToKeyboardKey[cmd]; /* !! = boolean */
         const specialCommand = specialCommands[cmd];
-        if (channelID === botChannel && (isValidKey || specialCommand)) {
+        
+		 if (isValidKey || specialCommand) {
             const now = Date.now();
-            if (now - lastButtonPress > config.commandCooldown) {
-                log('got command: ' + cmd);
-                lastButtonPress = now;
+			
+            log('got command: ' + cmd);
 
-                if (cmd === 'CLEAN') {
-                    cleanABunch();
-                } else {
-                    process.send({cmd, repeat});
-                }
-            }
-        }
-    });
+            if (cmd === 'CLEAN') {
+                cleanABunch();
+				}
+				
+			else {
+                process.send({cmd, repeat});
+			}
+			
+            }});
+	
 
     bot.on('disconnect', function(errMsg, code) {
         log('===== Disconnected! ErrCode: ' + code);
         log('===== Error: ' + errMsg);
         throw new Error('disconnect error!');
     });
-}
 
-process.on('message', function(msg) {
-    log('got outside message: ' + msg);
-    if (msg === 'update') {
-        updateScreen();
-    }
-});
+
+	process.on('message', function(msg) {
+		log('got outside message: ' + msg);
+		if (msg === 'update') {
+			updateScreen();
+		}
+	});
+	
+}
 
 startDiscordBot();
 
