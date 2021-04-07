@@ -18,6 +18,8 @@ This is a modified version of the original version by [kylepaulsen](https://gith
 
 Note: the Ctrl-Shift-S screenshot key is hardcoded into keyboardRobot.js and triggers a window screenshot in [Greenshot](https://getgreenshot.org/). On a standard Windows 10 installation this will trigger the Snip & Sketch tool which you may need to adjust in order to suit your needs.
 
+Note: Closing an RDP connection on Windows Server 2019 will pause active programs. As a workaround, a second Microsoft Windows Server 2012 R2 VM (2 vCPUs, 4 GB memory) on GCP is used to keep the RDP connection active.
+
 # How to use
 1. Make a discord bot and get a discord token. [See here](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
 2. Download this repo
