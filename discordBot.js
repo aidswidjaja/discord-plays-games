@@ -1,6 +1,9 @@
 const Discord = require('discord.io');
+const robot = require('robotjs');
 
 const config = require('./config.json');
+
+const co = require('co');
 
 let bot;
 let botChannel;
@@ -72,6 +75,13 @@ function cleanABunch() {
     });
 }
 
+function loadGame() {
+    log('loading game');
+	
+	robot.keyTap('f1', ['shift']);
+
+};
+
 function startDiscordBot() {
     bot = new Discord.Client({
         token: config.discordToken,
@@ -125,6 +135,12 @@ function startDiscordBot() {
                 cleanABunch();
 				}
 				
+			if (cmd === 'SAVE') {
+			loadGame();
+			updateScreen();
+
+			}
+				
 			else {
                 process.send({cmd, repeat});
 			}
@@ -144,8 +160,13 @@ function startDiscordBot() {
 		if (msg === 'update') {
 			updateScreen();
 		}
-	});
-	
+		
+		if (msg === 'save') {
+			loadGame();
+			updateScreen();
+
+		}
+	})
 }
 
 startDiscordBot();
