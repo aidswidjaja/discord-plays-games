@@ -14,11 +14,13 @@ This is a modified version of the original version by [kylepaulsen](https://gith
 - OS: Microsoft Windows Server 2019 Datacenter with Desktop Experience version 1809 (GCP public image) accessed through RDP
 - VM: e2-custom (4 vCPUs, 8 GB memory) on Google Cloud Platform Compute Engine in region australia-southeast-1b
 - Terminal emulator: Windows PowerShell 5.1.17763.1490
-- DS emulator: NO$GBA gaming edition
+- DS emulator: ~~NO$GBA gaming edition~~ melonDS
 
 Note: the Ctrl-Shift-S screenshot key is hardcoded into keyboardRobot.js and triggers a window screenshot in [Greenshot](https://getgreenshot.org/). On a standard Windows 10 installation this will trigger the Snip & Sketch tool which you may need to adjust in order to suit your needs.
 
 Note: Closing an RDP connection on Windows Server 2019 will pause active programs. As a workaround, a second Microsoft Windows Server 2012 R2 VM (2 vCPUs, 4 GB memory) on GCP is used to keep the RDP connection active.
+
+Note: NO$GBA was replaced by melonDS since it has a working snapshot feature.
 
 # How to use
 1. Make a discord bot and get a discord token. [See here](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
