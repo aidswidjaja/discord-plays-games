@@ -70,15 +70,17 @@ function updateScreen() {
 }
 
 function cleanABunch() {
+	log('clean');
     getManyMessages(function(messages) {
         deleteMessages(messages, updateScreen);
     });
 }
 
-function loadGame() {
-    log('loading game');
+function saveGame() {
+    log('saving game');
 	
 	robot.keyTap('f1', ['shift']);
+	updateScreen();
 
 };
 
@@ -103,7 +105,8 @@ function startDiscordBot() {
 
     const specialCommands = {
         update: updateScreen,
-        clean: cleanABunch
+        clean: cleanABunch,
+		save: saveGame
     };
 	
     bot.on('message', function(user, userID, channelID, message, event) {
@@ -133,12 +136,11 @@ function startDiscordBot() {
 
             if (cmd === 'CLEAN') {
                 cleanABunch();
-				}
+			}
 				
 			if (cmd === 'SAVE') {
-			loadGame();
-			updateScreen();
-
+				saveGame();
+				updateScreen();
 			}
 				
 			else {
@@ -162,7 +164,7 @@ function startDiscordBot() {
 		}
 		
 		if (msg === 'save') {
-			loadGame();
+			saveGame();
 			updateScreen();
 
 		}
