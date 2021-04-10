@@ -73,10 +73,8 @@ const pressButton = co.wrap(function*(button, repeat, delay) {
 
     if (keyboardKey) {
         while (repeat > 0) {
-            robot.keyToggle(keyboardKey, 'down');
-            yield sleep(downUpDelay);
-            waitTime += downUpDelay;
-            robot.keyToggle(keyboardKey, 'up');
+			robot.keyTap(keyboardKey);
+
             if (repeat > 1) {
                 yield sleep(betweenBtnDelay);
                 waitTime += betweenBtnDelay;
@@ -93,15 +91,7 @@ let canPressButton = true;
 const saveScreenshot = co.wrap(function*() {
     log('taking screenshot');
 	
-	robot.keyToggle("control", 'down');
-	robot.keyToggle("shift", 'down');
-	robot.keyToggle("s", 'down');
-	robot.keyToggle("control", 'up');
-	robot.keyToggle("shift", 'up');
-	robot.keyToggle("s", 'up');
-
-
-	log('screenie key: ' + config.screenshotKey);
+	robot.keyTap('s', ['control', 'shift']);
 
     log('waiting for screenshot to save');
 	
@@ -130,3 +120,5 @@ const processMessage = co.wrap(function*(msg) {
 process.on('message', processMessage);
 
 log('Ready to press keys!');
+
+
