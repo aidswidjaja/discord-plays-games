@@ -134,13 +134,12 @@ function startDiscordBot() {
 			
             log('got command: ' + cmd);
 
-            if (cmd === 'CLEAN') {
+            if (cmd === 'clean') {
                 cleanABunch();
 			}
 				
-			if (cmd === 'SAVE') {
+			if (cmd === 'save') {
 				saveGame();
-				updateScreen();
 			}
 				
 			else {
@@ -163,11 +162,7 @@ function startDiscordBot() {
 			updateScreen();
 		}
 		
-		if (msg === 'save') {
-			saveGame();
-			updateScreen();
-
-		}
+		
 	})
 }
 
