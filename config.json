@@ -12,10 +12,11 @@
         "b": "b",
         "select": "control",
         "start": "enter",
-		"l": "l",
-		"r": "r",
-		"x": "x",
-		"y": "y"
+	"l": "l",
+	"r": "r",
+	"x": "x",
+	"y": "y",
+	"load": "f1"
     },
     "maxButtonPressesPerTurn": 9,
     "discordBotMessage": "" 
