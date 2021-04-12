@@ -89,10 +89,14 @@ const pressButton = co.wrap(function*(button, repeat, delay) {
 let canPressButton = true;
 
 const saveScreenshot = co.wrap(function*() {
+	const screenshotDelay = 150;
+	
     log('taking screenshot');
 	
-	robot.keyTap('s', ['control', 'shift']);
+	robot.keyTap('s', ['alt', 'shift']);
 
+	yield sleep(screenshotDelay);
+	
     log('waiting for screenshot to save');
 	
     if (fs.existsSync(config.screenshotPath) == false) {
