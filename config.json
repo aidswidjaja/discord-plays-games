@@ -16,7 +16,8 @@
 	"r": "r",
 	"x": "x",
 	"y": "y",
-	"load": "f1"
+	"load": "f1",
+	"save": "p"
     },
     "maxButtonPressesPerTurn": 9,
     "discordBotMessage": "" 
