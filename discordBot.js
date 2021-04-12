@@ -79,9 +79,16 @@ function cleanABunch() {
 function saveGame() {
     log('saving game');
 	
-	robot.keyTap('f1', ['shift']);
-	updateScreen();
-
+	/* keyTap depreceated in favour of keyToggle to improve reliability */
+	
+	/* shift + f1 is the mangoDS load snapshot 1 hotkey */
+	robot.setKeyboardDelay(300);
+	robot.keyToggle('shift', 'down');
+	robot.keyToggle('f1', 'down');
+	robot.keyToggle('f1', 'up');
+	robot.keyToggle('shift', 'up');
+	robot.setKeyboardDelay(10); /* default == 10 */
+	
 };
 
 function startDiscordBot() {
@@ -140,6 +147,7 @@ function startDiscordBot() {
 				
 			if (cmd === 'save') {
 				saveGame();
+				process.send({cmd, repeat});
 			}
 				
 			else {
